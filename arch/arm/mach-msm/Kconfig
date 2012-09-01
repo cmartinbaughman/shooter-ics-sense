@@ -1597,6 +1597,14 @@ config MSM_DALRPC_TEST
 	help
 	  Exercises DAL RPC calls to QDSP6.
 
+config BOOST_L2_BANDWIDTH
+	bool "Boost L2 Bandwidth"
+	default n
+
+config SYNC_L2_CACHE_FREQ
+	bool "Synchronous L2 Cache Operations (Max 1.566 GHz)"
+	default n
+
 if CPU_FREQ_MSM
 
 config MSM_CPU_FREQ_SET_MIN_MAX
@@ -1609,22 +1617,14 @@ config MSM_CPU_FREQ_SET_MIN_MAX
 config MSM_CPU_FREQ_MAX
 	int "Max CPU Frequency"
 	depends on MSM_CPU_FREQ_SET_MIN_MAX
-	default 384000
+	default 1188000
 
 config MSM_CPU_FREQ_MIN
 	int "Min CPU Frequency"
 	depends on MSM_CPU_FREQ_SET_MIN_MAX
-	default 245760
+	default 192000
 
 endif # CPU_FREQ_MSM
-
-config MSM_CPU_FREQ_ONDEMAND_MAX
-        int "Max"
-        default 384000
-
-config MSM_CPU_FREQ_ONDEMAND_MIN
-        int "Min"
-        default 245760
 
 config MSM_CPU_AVS
 	bool "Enable software controlled Adaptive Voltage Scaling (AVS)"
