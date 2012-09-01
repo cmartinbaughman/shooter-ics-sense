@@ -651,6 +651,7 @@ cpufreq_freq_attr_rw(scaling_min_freq);
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
+define_one_global_rw(vdd_levels);
 
 #ifdef CONFIG_CPU_VOLTAGE_TABLE
 define_one_global_rw(vdd_levels);
@@ -2012,7 +2013,7 @@ static int __init cpufreq_core_init(void)
 	register_syscore_ops(&cpufreq_syscore_ops);
 
 #ifdef CONFIG_CPU_VOLTAGE_TABLE
-  rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
+    rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
 #endif  /* CONFIG_CPU_VOLTAGE_TABLE */
 
 	return 0;
