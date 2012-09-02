@@ -627,7 +627,6 @@ out:
 	return rc;
 }
 
-
 #ifdef CONFIG_CPU_VOLTAGE_TABLE
 
 ssize_t acpuclk_get_vdd_levels_str(char *buf) {
