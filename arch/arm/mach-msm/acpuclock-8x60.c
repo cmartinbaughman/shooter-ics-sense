@@ -65,7 +65,7 @@
  * The PLL hardware has a minimum frequency of 384MHz.
  * Calibration should respect this limit. */
 #define L_VAL_SCPLL_CAL_MIN	0x08 /* =  432 MHz with 27MHz source */
-
+#define L_VAL_SCPLL_CAL_MAX  0x24 /* = 1944 MHz with 27MHz source */
 
 #define MAX_VDD_SC		1450000 /* uV */
 #define MIN_VDD_SC		750000 /* uV */
@@ -183,7 +183,9 @@ static struct msm_bus_paths bw_level_tbl[] = {
 	[1] = BW_MBPS(1336), /* At least 167 MHz on bus. */
 	[2] = BW_MBPS(2008), /* At least 251 MHz on bus. */
 	[3] = BW_MBPS(2480), /* At least 310 MHz on bus. */
-	[4] = BW_MBPS(3200), /* At least 360 MHz on bus. */
+	[4] = BW_MBPS(2680), /* At least 335 MHz on bus. */
+	[5] = BW_MBPS(2880), /* At least 360 MHz on bus. */
+	[6] = BW_MBPS(3080), /* At least 385 MHz on bus. */
 };
 
 static struct msm_bus_scale_pdata bus_client_pdata = {
@@ -217,7 +219,7 @@ static struct clkctl_l2_speed l2_freq_tbl_v2[] = {
 	[17] = {1296000,  1, 0x18, 1200000, 1225000, 3},
 	[18] = {1350000,  1, 0x19, 1200000, 1225000, 3},
 	[19] = {1404000,  1, 0x1A, 1200000, 1250000, 4},
-	[20] = {1458000,  1, 0x1B, 1225000, 1275000, 4},
+	[20] = {1458000,  1, 0x1B, 1225000, 1255000, 4},
 	[21] = {1512000,  1, 0x1C, 1225000, 1275000, 4},
 	[22] = {1566000,  1, 0x1D, 1225000, 1275000, 4},
  };
@@ -626,6 +628,17 @@ out:
 		mutex_unlock(&drv_state.lock);
 	return rc;
 }
+
+#ifdef CONFIG_PERFLOCK
+unsigned int get_max_cpu_freq(void)
+{
+	struct clkctl_acpu_speed *f;
+	for (f = acpu_freq_tbl; f->acpuclk_khz != 0; f++)
+		;
+	f--;
+	return f->acpuclk_khz;;
+}
+#endif
 
 #ifdef CONFIG_CPU_VOLTAGE_TABLE
 
